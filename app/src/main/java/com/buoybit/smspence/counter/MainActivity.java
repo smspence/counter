@@ -26,9 +26,6 @@ public class MainActivity extends WearableActivity {
     private static final int backgroundColorInteractive = Color.DKGRAY;
     private static final int backgroundColorAmbient = Color.BLACK;
 
-    private static final String COUNTER_SHARED_PREFS_KEY = "COUNTER_PREFS";
-    private static final String COUNT_KEY = "COUNT_KEY";
-
     private SharedPreferences sharedPrefs;
 
     private int currentCount = 0;
@@ -48,8 +45,8 @@ public class MainActivity extends WearableActivity {
 
         currentCountTextView = (TextView) findViewById(R.id.currentCountTextView);
 
-        sharedPrefs = getApplicationContext().getSharedPreferences(COUNTER_SHARED_PREFS_KEY, 0);
-        currentCount = sharedPrefs.getInt(COUNT_KEY, 0);
+        sharedPrefs = getApplicationContext().getSharedPreferences(Constants.COUNTER_SHARED_PREFS_KEY, 0);
+        currentCount = sharedPrefs.getInt(Constants.COUNT_KEY, 0);
 
         updateCountTextView();
 
@@ -95,7 +92,7 @@ public class MainActivity extends WearableActivity {
     private void updateSharedPrefs() {
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putInt(COUNT_KEY, currentCount);
+        editor.putInt(Constants.COUNT_KEY, currentCount);
         editor.apply();
     }
 
