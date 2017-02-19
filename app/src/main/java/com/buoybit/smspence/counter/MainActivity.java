@@ -96,6 +96,23 @@ public class MainActivity extends WearableActivity {
                 new ProviderUpdateRequester(getApplicationContext(), complicationProviderComponentName);
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+
+            // The activity was previously dismissed or hidden,
+            //  but has now regained focus.
+            // So make sure we have the latest data from shared prefs...
+
+            if (sharedPrefs != null) {
+                currentCount = sharedPrefs.getInt(Constants.COUNT_KEY, 0);
+                updateCountTextView();
+            }
+        }
+    }
+
     private void updateSavedData() {
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
