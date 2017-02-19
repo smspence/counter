@@ -1,5 +1,8 @@
 package com.buoybit.smspence.counter;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.wearable.complications.ComplicationData;
 import android.support.wearable.complications.ComplicationManager;
@@ -21,10 +24,16 @@ public class CountProviderService extends ComplicationProviderService {
 
         ComplicationData complicationData = null;
 
-        SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences(Constants.COUNTER_SHARED_PREFS_KEY, 0);
+        Context context = getApplicationContext();
+
+        SharedPreferences sharedPrefs = context.getSharedPreferences(Constants.COUNTER_SHARED_PREFS_KEY, 0);
         final int currentCount = sharedPrefs.getInt(Constants.COUNT_KEY, 0);
 
         final String countString = NumberFormat.getIntegerInstance().format(currentCount);
+
+        Intent intent = new Intent();
+        intent.setAction(Constants.INCREMENT_ACTION);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         switch (dataType) {
 
@@ -32,6 +41,7 @@ public class CountProviderService extends ComplicationProviderService {
                 complicationData = new ComplicationData.Builder(ComplicationData.TYPE_SHORT_TEXT)
                         .setShortText(ComplicationText.plainText(countString))
                         .setShortTitle(ComplicationText.plainText(getResources().getString(R.string.count)))
+                        .setTapAction(pendingIntent)
                         .build();
                 break;
 
