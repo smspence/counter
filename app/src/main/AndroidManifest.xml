@@ -8,7 +8,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/counter_app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
@@ -33,7 +33,7 @@
 
         <service android:name=".CountProviderService"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/counter_provider_icon"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
 
             <intent-filter>
