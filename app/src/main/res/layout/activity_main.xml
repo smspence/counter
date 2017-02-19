@@ -45,7 +45,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:text="r" />
+                android:background="@drawable/counter_reset"/>
 
             <Space
                 android:layout_width="10dp"
@@ -65,7 +65,7 @@
                 android:id="@+id/buttonDecrement"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:text="-" />
+                android:background="@drawable/counter_minus" />
 
             <Space
                 android:layout_width="20dp"
@@ -75,7 +75,7 @@
                 android:id="@+id/buttonIncrement"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:text="+" />
+                android:background="@drawable/counter_plus" />
 
         </LinearLayout>
 
