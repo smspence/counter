@@ -1,18 +1,17 @@
 package com.buoybit.smspence.counter;
 
+import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
+import android.support.wearable.complications.ProviderUpdateRequester;
 import android.support.wearable.view.BoxInsetLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends WearableActivity {
 
@@ -27,6 +26,8 @@ public class MainActivity extends WearableActivity {
     private static final int backgroundColorAmbient = Color.BLACK;
 
     private SharedPreferences sharedPrefs;
+
+    private ProviderUpdateRequester providerUpdateRequester;
 
     private int currentCount = 0;
 
@@ -56,7 +57,7 @@ public class MainActivity extends WearableActivity {
 
                 currentCount = 0;
 
-                updateSharedPrefs();
+                updateSavedData();
 
                 updateCountTextView();
             }
@@ -69,7 +70,7 @@ public class MainActivity extends WearableActivity {
                 if (currentCount > 0) {
                     currentCount--;
 
-                    updateSharedPrefs();
+                    updateSavedData();
 
                     updateCountTextView();
                 }
@@ -82,18 +83,28 @@ public class MainActivity extends WearableActivity {
 
                 currentCount++;
 
-                updateSharedPrefs();
+                updateSavedData();
 
                 updateCountTextView();
             }
         });
+
+        ComponentName complicationProviderComponentName =
+                new ComponentName(getApplicationContext(), CountProviderService.class);
+
+        providerUpdateRequester =
+                new ProviderUpdateRequester(getApplicationContext(), complicationProviderComponentName);
     }
 
-    private void updateSharedPrefs() {
+    private void updateSavedData() {
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(Constants.COUNT_KEY, currentCount);
         editor.apply();
+
+        // Send update to any complications that
+        //  might currently be using this data
+        providerUpdateRequester.requestUpdateAll();
     }
 
     @Override
