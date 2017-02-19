@@ -15,19 +15,19 @@
         android:layout_height="match_parent"
         android:paddingTop="5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
-            android:text="@string/app_name"
-            android:textSize="24sp"
-            android:textColor="@color/white"/>
-
         <LinearLayout
             android:layout_width="100dp"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:text="@string/app_name"
+                android:textSize="24sp"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/currentCountTextView"
@@ -52,33 +52,37 @@
 
             <Space
                 android:layout_width="10dp"
-                android:layout_height="25dp"
+                android:layout_height="11dp"
                 android:layout_gravity="center_horizontal" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:orientation="horizontal">
+                <Button
+                    android:id="@+id/buttonDecrement"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/counter_minus" />
 
-            <Button
-                android:id="@+id/buttonDecrement"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/counter_minus" />
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/buttonIncrement"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/counter_plus" />
+
+            </LinearLayout>
 
             <Space
-                android:layout_width="20dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:id="@+id/buttonIncrement"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/counter_plus" />
+                android:layout_width="10dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 
