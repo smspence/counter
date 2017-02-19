@@ -1,5 +1,6 @@
 package com.buoybit.smspence.counter;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
@@ -15,9 +16,6 @@ import java.util.Locale;
 
 public class MainActivity extends WearableActivity {
 
-    private static final SimpleDateFormat AMBIENT_DATE_FORMAT =
-            new SimpleDateFormat("HH:mm", Locale.US);
-
     private BoxInsetLayout containerView;
     private TextView currentCountTextView;
 
@@ -27,6 +25,11 @@ public class MainActivity extends WearableActivity {
 
     private static final int backgroundColorInteractive = Color.DKGRAY;
     private static final int backgroundColorAmbient = Color.BLACK;
+
+    private static final String COUNTER_SHARED_PREFS_KEY = "COUNTER_PREFS";
+    private static final String COUNT_KEY = "COUNT_KEY";
+
+    private SharedPreferences sharedPrefs;
 
     private int currentCount = 0;
 
@@ -45,6 +48,9 @@ public class MainActivity extends WearableActivity {
 
         currentCountTextView = (TextView) findViewById(R.id.currentCountTextView);
 
+        sharedPrefs = getApplicationContext().getSharedPreferences(COUNTER_SHARED_PREFS_KEY, 0);
+        currentCount = sharedPrefs.getInt(COUNT_KEY, 0);
+
         updateCountTextView();
 
         buttonReset.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +58,8 @@ public class MainActivity extends WearableActivity {
             public void onClick(View v) {
 
                 currentCount = 0;
+
+                updateSharedPrefs();
 
                 updateCountTextView();
             }
@@ -63,9 +71,11 @@ public class MainActivity extends WearableActivity {
 
                 if (currentCount > 0) {
                     currentCount--;
-                }
 
-                updateCountTextView();
+                    updateSharedPrefs();
+
+                    updateCountTextView();
+                }
             }
         });
 
@@ -75,9 +85,18 @@ public class MainActivity extends WearableActivity {
 
                 currentCount++;
 
+                updateSharedPrefs();
+
                 updateCountTextView();
             }
         });
+    }
+
+    private void updateSharedPrefs() {
+
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putInt(COUNT_KEY, currentCount);
+        editor.apply();
     }
 
     @Override
