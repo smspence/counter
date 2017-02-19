@@ -25,32 +25,35 @@
 
         <LinearLayout
             android:layout_width="100dp"
-            android:layout_height="96dp"
+            android:layout_height="110dp"
             android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/currentCountTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:textSize="40sp"
                 android:text="0"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center_horizontal" />
 
             <Button
                 android:id="@+id/buttonReset"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/counter_reset"/>
 
             <Space
                 android:layout_width="10dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center" />
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 
