@@ -1,11 +1,14 @@
 package com.buoybit.smspence.counter;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -15,9 +18,17 @@ public class MainActivity extends WearableActivity {
     private static final SimpleDateFormat AMBIENT_DATE_FORMAT =
             new SimpleDateFormat("HH:mm", Locale.US);
 
-    private BoxInsetLayout mContainerView;
-    private TextView mTextView;
-    private TextView mClockView;
+    private BoxInsetLayout containerView;
+    private TextView currentCountTextView;
+
+    private Button buttonReset;
+    private Button buttonDecrement;
+    private Button buttonIncrement;
+
+    private static final int backgroundColorInteractive = Color.DKGRAY;
+    private static final int backgroundColorAmbient = Color.BLACK;
+
+    private int currentCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +36,48 @@ public class MainActivity extends WearableActivity {
         setContentView(R.layout.activity_main);
         setAmbientEnabled();
 
-        mContainerView = (BoxInsetLayout) findViewById(R.id.container);
-        mTextView = (TextView) findViewById(R.id.text);
-        mClockView = (TextView) findViewById(R.id.clock);
+        containerView = (BoxInsetLayout) findViewById(R.id.container);
+        containerView.setBackgroundColor(backgroundColorInteractive);
+
+        buttonReset = (Button) findViewById(R.id.buttonReset);
+        buttonDecrement = (Button) findViewById(R.id.buttonDecrement);
+        buttonIncrement = (Button) findViewById(R.id.buttonIncrement);
+
+        currentCountTextView = (TextView) findViewById(R.id.currentCountTextView);
+
+        updateCountTextView();
+
+        buttonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                currentCount = 0;
+
+                updateCountTextView();
+            }
+        });
+
+        buttonDecrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (currentCount > 0) {
+                    currentCount--;
+                }
+
+                updateCountTextView();
+            }
+        });
+
+        buttonIncrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                currentCount++;
+
+                updateCountTextView();
+            }
+        });
     }
 
     @Override
@@ -48,17 +98,34 @@ public class MainActivity extends WearableActivity {
         super.onExitAmbient();
     }
 
-    private void updateDisplay() {
-        if (isAmbient()) {
-            mContainerView.setBackgroundColor(getResources().getColor(android.R.color.black));
-            mTextView.setTextColor(getResources().getColor(android.R.color.white));
-            mClockView.setVisibility(View.VISIBLE);
+    private void updateCountTextView() {
+        final String countString = NumberFormat.getIntegerInstance().format(currentCount);
+        currentCountTextView.setText(countString);
+    }
 
-            mClockView.setText(AMBIENT_DATE_FORMAT.format(new Date()));
+    private void updateButtonVisibility(boolean isInAmbientMode) {
+
+        final int state = isInAmbientMode ? View.INVISIBLE : View.VISIBLE;
+
+        buttonReset.setVisibility(state);
+        buttonDecrement.setVisibility(state);
+        buttonIncrement.setVisibility(state);
+    }
+
+    private void updateDisplay() {
+
+        updateCountTextView();
+
+        updateButtonVisibility(isAmbient());
+
+        if (isAmbient()) {
+
+            containerView.setBackgroundColor(backgroundColorAmbient);
+
         } else {
-            mContainerView.setBackground(null);
-            mTextView.setTextColor(getResources().getColor(android.R.color.black));
-            mClockView.setVisibility(View.GONE);
+
+            containerView.setBackgroundColor(backgroundColorInteractive);
+
         }
     }
 }

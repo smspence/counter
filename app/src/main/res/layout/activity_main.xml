@@ -5,22 +5,80 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     tools:context="com.buoybit.smspence.counter.MainActivity"
-    tools:deviceIds="wear">
+    tools:deviceIds="wear"
+    android:background="@color/dark_grey">
 
-    <TextView
-        android:id="@+id/text"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_world"
-        app:layout_box="all" />
+        android:paddingTop="5dp">
 
-    <TextView
-        android:id="@+id/clock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:textColor="@android:color/white"
-        app:layout_box="all" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:text="@string/app_name"
+            android:textSize="24sp"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/currentCountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:textSize="40sp"
+                android:text="0"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/buttonReset"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:text="r" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonDecrement"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="-" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/buttonIncrement"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="+" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </android.support.wearable.view.BoxInsetLayout>
