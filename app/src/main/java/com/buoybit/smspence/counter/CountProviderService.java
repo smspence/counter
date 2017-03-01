@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Icon;
 import android.support.wearable.complications.ComplicationData;
 import android.support.wearable.complications.ComplicationManager;
 import android.support.wearable.complications.ComplicationProviderService;
@@ -41,6 +42,14 @@ public class CountProviderService extends ComplicationProviderService {
                 complicationData = new ComplicationData.Builder(ComplicationData.TYPE_SHORT_TEXT)
                         .setShortText(ComplicationText.plainText(countString))
                         .setShortTitle(ComplicationText.plainText(getResources().getString(R.string.count)))
+                        .setTapAction(pendingIntent)
+                        .build();
+                break;
+
+            case ComplicationData.TYPE_LONG_TEXT:
+                complicationData = new ComplicationData.Builder(ComplicationData.TYPE_LONG_TEXT)
+                        .setLongText(ComplicationText.plainText(getResources().getString(R.string.count_capitalized) + ": " + countString))
+                        .setIcon(Icon.createWithResource(context, R.drawable.counter_provider_icon))
                         .setTapAction(pendingIntent)
                         .build();
                 break;
